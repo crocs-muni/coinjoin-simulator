@@ -85,15 +85,18 @@ class PodmanDriver(Driver):
             os.path.dirname(dst_path), fo
         )
 
-    def cleanup(self, image_prefix=""):
+    def cleanup(self, image_prefix="", versions=None):
+        image_names = set([
+            f"{image_prefix}btc-node",
+            f"{image_prefix}wasabi-backend"])
+        
+        if versions:
+            for version in versions:
+                image_names.add(f"{image_prefix}wasabi-client-{version}")
+
         containers = list(
             filter(
-                lambda x: x.attrs["Config"]["Image"]
-                in (
-                    f"{image_prefix}btc-node",
-                    f"{image_prefix}wasabi-backend",
-                    f"{image_prefix}wasabi-client",
-                ),
+                lambda x: x.attrs["Config"]["Image"] in image_names,
                 docker.from_env().containers.list(),
             )
         )

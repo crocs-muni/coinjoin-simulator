@@ -49,5 +49,5 @@ class Driver(ABC):
         pass
 
     @abstractmethod
-    def cleanup(self, image_prefix=""):
+    def cleanup(self, image_prefix="", versions=None):
         pass

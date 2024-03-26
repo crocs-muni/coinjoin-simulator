@@ -1,0 +1,30 @@
+diff --git a/WalletWasabi/Logging/Logger.cs b/WalletWasabi/Logging/Logger.cs
+index eb096be1e..c56a17691 100644
+--- a/WalletWasabi/Logging/Logger.cs
++++ b/WalletWasabi/Logging/Logger.cs
+@@ -46,7 +46,7 @@ public static class Logger
+ 	/// Gets or sets the maximum log file size in KB.
+ 	/// </summary>
+ 	/// <remarks>Default value is approximately 10 MB. If set to <c>0</c>, then there is no maximum log file size.</remarks>
+-	private static long MaximumLogFileSize { get; set; } = 10_000;
++	private static long MaximumLogFileSize { get; set; } = 0;
+ 
+ 	#endregion PropertiesAndMembers
+ 
+@@ -68,14 +68,14 @@ public static class Logger
+ 		SetFilePath(filePath);
+ 
+ #if RELEASE
+-		SetMinimumLevel(logLevel ??= LogLevel.Info);
++		SetMinimumLevel(logLevel ??= LogLevel.Debug);
+ 		SetModes(LogMode.Console, LogMode.File);
+ 
+ #else
+ 		SetMinimumLevel(logLevel ??= LogLevel.Debug);
+ 		SetModes(LogMode.Debug, LogMode.Console, LogMode.File);
+ #endif
+-		MaximumLogFileSize = MinimumLevel == LogLevel.Trace ? 0 : 10_000;
++		MaximumLogFileSize = 0;
+ 	}
+ 
+ 	public static void SetMinimumLevel(LogLevel level) => MinimumLevel = level;

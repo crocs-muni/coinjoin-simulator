@@ -228,7 +228,7 @@ class KubernetesDriver(Driver):
                 break
         resp.close()
 
-    def cleanup(self, image_prefix=""):
+    def cleanup(self, image_prefix="", versions=None):
         pods = self.client.list_namespaced_pod(namespace=self._namespace)
         for pod in pods.items:
             if any(

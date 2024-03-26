@@ -73,6 +73,13 @@ def setup_parser(parser: argparse.ArgumentParser):
         "--out-dir", type=str, default="scenarios", help="output directory"
     )
 
+    parser.add_argument(
+        "--distributor-version", 
+        type=str, 
+        default="none", 
+        help="version of the distibutor wallet, 'none' for using default client version"
+        )
+
 
 def handler(args):
     print("Generating scenario...")
@@ -87,6 +94,9 @@ def handler(args):
     )
     scenario["rounds"] = args.stop_round
     scenario["blocks"] = args.stop_block
+
+    if args.distributor_version != "none":
+        scenario["distributor_version"] = args.distributor_version
 
     delays = [0] * args.client_count
 
